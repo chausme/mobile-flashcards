@@ -1,24 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
-import { fetchDecksResults } from '../utils/api'
+//import { fetchDecks } from '../utils/api'
+import {
+  fetchDecks
+} from '../actions'
 
-export default class List extends React.Component {
+class List extends React.Component {
 
     componentDidMount() {
 
-      fetchDecksResults()
+      this.props.fetchDecks()
 
     }
 
     render() {
 
-      return (
-        <View style={styles.deckList}>
-          <Text>
-            Welcome to React Native!
-          </Text>
-        </View>
-      );
+        let decks = this.props.decks
+
+        return (
+            <View style={styles.deckList}>
+                {decks.map((deck) => (
+                  <Text key={deck.title}>
+                    {deck.title}
+                  </Text>
+                ))}
+            </View>
+        );
     }
 
 }
@@ -31,3 +39,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+function mapStateToProps ({decks}) {
+
+    return {
+        decks: Object.values(decks),
+    }
+
+}
+
+function mapDispatchToProps (dispatch) {
+    return {
+        fetchDecks: () => dispatch(fetchDecks()),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(List)

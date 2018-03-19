@@ -39,10 +39,8 @@ function setDummyData () {
 
 export function formatDecksResults (results) {
 
-    console.log(results)
-
     return results === null
         ? setDummyData()
-        : results
+        : JSON.parse(results)
 
 }
