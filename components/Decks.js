@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
-//import { fetchDecks } from '../utils/api'
+import { StyleSheet, Text, View } from 'react-native';
+import Deck from '../components/Deck'
+
 import {
-  fetchDecks
+    fetchDecks
 } from '../actions'
 
-class List extends React.Component {
+class Decks extends React.Component {
 
     componentDidMount() {
 
-      this.props.fetchDecks()
+        this.props.fetchDecks()
 
     }
 
@@ -21,9 +22,7 @@ class List extends React.Component {
         return (
             <View style={styles.deckList}>
                 {decks.map((deck) => (
-                  <Text key={deck.title}>
-                    {deck.title}
-                  </Text>
+                    <Deck key={deck.title} title={deck.title} questions={deck.questions} />
                 ))}
             </View>
         );
@@ -57,4 +56,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(List)
+)(Decks)
