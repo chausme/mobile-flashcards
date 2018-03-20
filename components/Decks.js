@@ -17,12 +17,14 @@ class Decks extends React.Component {
 
     render() {
 
+        const navigation = this.props.navigation
+
         let decks = this.props.decks
 
         return (
             <View style={styles.deckList}>
                 {decks.map((deck) => (
-                    <Deck key={deck.title} title={deck.title} questions={deck.questions} />
+                    <Deck key={deck.title} title={deck.title} questions={deck.questions} navigation={navigation} />
                 ))}
             </View>
         );

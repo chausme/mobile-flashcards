@@ -5,10 +5,13 @@ export default class Deck extends React.Component {
 
     render() {
 
-        const { title, questions } = this.props
+        const { title, questions, navigation } = this.props
 
         return (
-            <TouchableOpacity onPress={console.log('you clicked on deck!')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate(
+              'DeckDetail',
+              { deckTitle: title }
+            )}>
                 <Text>{title}, {questions.length} cards</Text>
             </TouchableOpacity>
         );
