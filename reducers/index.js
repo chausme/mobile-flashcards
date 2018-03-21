@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import {
-    FETCH_DECKS
+    FETCH_DECKS,
+    FETCH_DECK
 } from '../actions'
 
 function decks (state = {}, action) {
@@ -15,6 +16,22 @@ function decks (state = {}, action) {
   }
 }
 
+function deck (state = {}, action) {
+
+  const { deck } = action
+
+  switch (action.type) {
+    case FETCH_DECK :
+      return {
+        ...state,
+        deck: deck
+      }
+      default :
+        return state
+    }
+}
+
 export default combineReducers({
-  decks
+    decks,
+    deck
 })

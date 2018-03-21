@@ -9,7 +9,7 @@ export default class Deck extends React.Component {
 
         return (
             <TouchableOpacity onPress={() => this.props.navigation.navigate(
-              'DeckDetail',
+              'DeckDetails',
               { deckTitle: title }
             )}>
                 <Text>{title}, {questions.length} cards</Text>

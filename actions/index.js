@@ -5,11 +5,25 @@ export const FETCH_DECKS = 'FETCH_DECKS'
 export const fetchDecksAction = decks => ({
   type: FETCH_DECKS,
   decks
-});
+})
 
 export const fetchDecks = () => dispatch => (
     Api.fetchDecks()
         .then(response => {
             return dispatch(fetchDecksAction(response))
         })
-);
+)
+
+export const FETCH_DECK = 'FETCH_DECK'
+
+export const fetchDeckAction = deck => ({
+  type: FETCH_DECK,
+  deck
+})
+
+export const fetchDeck = (deckTitle) => dispatch => (
+    Api.fetchDeck(deckTitle)
+        .then(deck => {
+            return dispatch(fetchDeckAction(deck))
+        })
+)

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { StyleSheet, Text, View } from 'react-native';
 import Deck from '../components/Deck'
-
 import {
     fetchDecks
 } from '../actions'
@@ -10,9 +9,7 @@ import {
 class Decks extends React.Component {
 
     componentDidMount() {
-
         this.props.fetchDecks()
-
     }
 
     render() {
@@ -39,7 +36,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-});
+})
 
 function mapStateToProps ({decks}) {
 

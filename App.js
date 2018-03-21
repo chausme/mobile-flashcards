@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Platform, StatusBar } from 'react-native'
 import Decks from './components/Decks'
 import AddDeck from './components/AddDeck'
-import DeckDetail from './components/DeckDetail'
+import DeckDetails from './components/DeckDetails'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { TabNavigator, StackNavigator } from 'react-navigation'
@@ -94,8 +94,8 @@ const MainNavigator = StackNavigator({
             }
         }
     },
-    DeckDetail: {
-      screen: DeckDetail,
+    DeckDetails: {
+      screen: DeckDetails,
       navigationOptions: {
         headerTintColor: white,
         headerStyle: {
