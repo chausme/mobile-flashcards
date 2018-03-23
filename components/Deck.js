@@ -12,7 +12,7 @@ export default class Deck extends React.Component {
               'DeckDetails',
               { deckTitle: title }
             )}>
-                <Text>{title}, {questions.length} cards</Text>
+                <Text>{title}, {questions ? questions.length : 0} cards</Text>
             </TouchableOpacity>
         );
     }

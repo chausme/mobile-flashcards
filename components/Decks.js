@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Deck from '../components/Deck'
 import {
     fetchDecks

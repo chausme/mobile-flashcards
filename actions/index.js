@@ -3,8 +3,8 @@ import * as Api from '../utils/api'
 export const FETCH_DECKS = 'FETCH_DECKS'
 
 export const fetchDecksAction = decks => ({
-  type: FETCH_DECKS,
-  decks
+    type: FETCH_DECKS,
+    decks
 })
 
 export const fetchDecks = () => dispatch => (
@@ -17,8 +17,8 @@ export const fetchDecks = () => dispatch => (
 export const FETCH_DECK = 'FETCH_DECK'
 
 export const fetchDeckAction = deck => ({
-  type: FETCH_DECK,
-  deck
+    type: FETCH_DECK,
+    deck
 })
 
 export const fetchDeck = (deckTitle) => dispatch => (
@@ -27,3 +27,17 @@ export const fetchDeck = (deckTitle) => dispatch => (
             return dispatch(fetchDeckAction(deck))
         })
 )
+
+export const ADD_DECK = 'ADD_DECK'
+
+export const addDeckAction = deckTitle => ({
+    type: ADD_DECK,
+    deckTitle
+})
+
+export const addDeck = (deck) => dispatch => {
+    return Api.addDeck(deck.deckTitle)
+        .then(response => {
+            return dispatch(addDeckAction(response))
+        })
+}
