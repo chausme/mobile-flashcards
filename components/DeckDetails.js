@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
 import {
     fetchDeck
@@ -8,30 +8,37 @@ import {
 class DeckDetails extends React.Component {
 
     static navigationOptions = ({ navigation }) => {
-      return {
-        title: navigation.state.params.deckTitle
-      }
+        return {
+            title: navigation.state.params.deckTitle
+        }
     }
 
     componentDidMount() {
-        this.props.fetchDeck(this.props.deckTitle)
+        this.props.fetchDeck(this.props.navigation.state.params.deckTitle)
     }
 
     render() {
 
-        const deck = this.props.deck
+        Keyboard.dismiss()
 
-        if (deck) {
-            return (
-                <View style={styles.deckDetails}>
-                    <Text>Deck Details for {deck.title}</Text>
-                    <Text>{deck.questions.length} cards</Text>
-                    <Text>[button] Add Card</Text>
-                    <Text>[button] Start Quiz</Text>
-                </View>
-            )
-        }
-        return null
+        const deckTitle = this.props.navigation.state.params.deckTitle
+        const deck = this.props.deck
+        
+        return (
+            <View style={styles.deckDetails}>
+                <Text>Deck Details for {this.props.navigation.state.params.deckTitle}</Text>
+                <Text>{deck ? deck.questions.length : '0'} cards</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate(
+                  'AddCard',
+                  { deckTitle: deckTitle }
+                )}>
+                    <Text>Add Card</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>Start Quiz</Text>
+                </TouchableOpacity>
+            </View>
+        )
 
     }
 
@@ -46,12 +53,9 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps (state, { navigation }) {
-    const { deckTitle } = navigation.state.params
-
+function mapStateToProps ({deck}) {
     return {
-        deckTitle,
-        deck: state.deck.deck
+        deck: deck.deck
     }
 }
 

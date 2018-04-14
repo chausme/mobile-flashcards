@@ -6,6 +6,27 @@ import {
     ADD_DECK
 } from '../actions'
 
+function general (state = {redirect: false}, action) {
+
+    const { deckTitle } = action
+
+    switch (action.type) {
+        case FETCH_DECK :
+            return {
+                ...state,
+                redirect: false
+            }
+        case ADD_DECK :
+            return {
+                ...state,
+                redirect: deckTitle
+            }
+        default :
+            return state
+  }
+
+}
+
 function decks (state = {}, action) {
 
     const { decks, deckTitle } = action
@@ -42,6 +63,7 @@ function deck (state = {}, action) {
 }
 
 export default combineReducers({
+    general,
     decks,
     deck,
     form: formReducer

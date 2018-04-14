@@ -35,9 +35,9 @@ export const addDeckAction = deckTitle => ({
     deckTitle
 })
 
-export const addDeck = (deck) => dispatch => {
-    return Api.addDeck(deck.deckTitle)
+export const addDeck = (deck) => dispatch => (
+    Api.addDeck(deck.deckTitle)
         .then(response => {
             return dispatch(addDeckAction(response))
         })
-}
+)

@@ -21,7 +21,7 @@ export const addDeck = (deckTitle) => {
     }
 
     // uncomment below to clear AsyncStorage
-    // return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
+    //return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
 
     return AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
         AsyncStorage.setItem(DECKS_STORAGE_KEY, result, () => {
