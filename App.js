@@ -52,6 +52,13 @@ const Tabs = TabNavigator({
             tabBarLabel: 'New Deck',
             tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
         },
+    },
+    Settings: {
+        screen: AddCard,
+        navigationOptions: {
+            tabBarLabel: 'Settings',
+            tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+        },
     }
     }, {
     navigationOptions: {

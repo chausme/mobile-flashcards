@@ -1,21 +1,37 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native'
-//import AddDeckForm from './AddDeckForm'
+import AddCardForm from './AddCardForm'
 import { NavigationActions } from 'react-navigation'
 import {
-    addDeck
+    addCard,
+    fetchDeck
 } from '../actions'
 
 class AddCard extends React.Component {
 
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Add Card'
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+
+        if (prevProps !== this.props) {
+            if (this.props.general.redirect) {
+                this.props.navigation.pop(1)
+            }
+        }
+    }
+
     render() {
 
-        const { addDeck } = this.props
+        const { addCard } = this.props
 
         return (
             <View style={styles.addCard}>
-                <Text>Form will be here!</Text>
+                <AddCardForm onSubmit={addCard} />
             </View>
         )
     }
@@ -42,7 +58,8 @@ function mapStateToProps ({decks, general}) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        addDeck: (data) => dispatch(addDeck(data))
+        addCard: (data) => dispatch(addCard(data)),
+        fetchDeck: (data) => dispatch(fetchDeck(data)),
     }
 }
 
