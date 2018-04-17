@@ -26,7 +26,23 @@ export const fetchDeck = (deckTitle) => dispatch => (
         .then(deck => {
             return dispatch(fetchDeckAction(deck))
         })
+
 )
+
+export const REMOVE_DECKS = 'REMOVE_DECKS'
+
+export const removeDecksAction = () => ({
+    type: REMOVE_DECKS
+})
+
+export const removeDecks = () => dispatch => {
+
+    return Api.removeDecks()
+        .then(response => {
+            return dispatch(removeDecksAction())
+        })
+
+}
 
 export const ADD_DECK = 'ADD_DECK'
 

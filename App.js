@@ -4,6 +4,7 @@ import Decks from './components/Decks'
 import AddDeck from './components/AddDeck'
 import DeckDetails from './components/DeckDetails'
 import AddCard from './components/AddCard'
+import Settings from './components/Settings'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { TabNavigator, StackNavigator } from 'react-navigation'
@@ -54,7 +55,7 @@ const Tabs = TabNavigator({
         },
     },
     Settings: {
-        screen: AddCard,
+        screen: Settings,
         navigationOptions: {
             tabBarLabel: 'Settings',
             tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />

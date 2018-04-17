@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form'
 import {
     FETCH_DECKS,
     FETCH_DECK,
+    REMOVE_DECKS,
     ADD_DECK,
     ADD_CARD
 } from '../actions'
@@ -22,6 +23,8 @@ function general (state = {redirect: false, lastDeckTitle: false, lastDeckCards:
                 ...state,
                 redirect: false
             }
+        case REMOVE_DECKS :
+            return {}
         case ADD_DECK :
             return {
                 ...state,
@@ -48,6 +51,8 @@ function decks (state = {}, action) {
     switch (action.type) {
         case FETCH_DECKS :
             return decks ? decks : state
+        case REMOVE_DECKS :
+            return {}
         case ADD_DECK :
             return {
                 ...state,
@@ -71,6 +76,8 @@ function deck (state = {}, action) {
                 ...state,
                 deck: deck
             }
+        case REMOVE_DECKS :
+            return {}
         default :
             return state
         }

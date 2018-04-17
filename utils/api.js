@@ -7,8 +7,17 @@ export const fetchDecks = () => {
 }
 
 export const fetchDeck = (deckTitle) => {
+
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
-        .then(results => JSON.parse(results)[deckTitle])
+        .then(results => {
+            results !== null ? JSON.parse(results)[deckTitle] : ''
+        })
+}
+
+export const removeDecks = () => {
+
+    return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
+
 }
 
 export const addDeck = (deckTitle) => {
@@ -19,9 +28,6 @@ export const addDeck = (deckTitle) => {
             questions: []
         }
     }
-
-    // uncomment below to clear AsyncStorage
-    //return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
 
     return AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
         AsyncStorage.setItem(DECKS_STORAGE_KEY, result, () => {
