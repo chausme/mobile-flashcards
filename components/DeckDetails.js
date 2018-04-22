@@ -38,6 +38,9 @@ class DeckDetails extends React.Component {
         const deckTitle = this.props.navigation.state.params.deckTitle
         const deck = this.props.deck
 
+        console.log('single deck')
+        console.log(this.props)
+
         return (
             <View style={styles.deckDetails}>
                 <Text>Deck Details for {this.props.navigation.state.params.deckTitle}</Text>

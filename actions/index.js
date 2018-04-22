@@ -68,15 +68,14 @@ export const addCardAction = ({card, deckTitle}) => ({
 
 export const addCard = (card) => dispatch => {
 
-    console.log('card')
-    console.log(card)
-
-    return dispatch(addCardAction(card))
-
-    // Api.addCardToDeck({card, deckTitle})
-    //     .then(response => {
-    //         console.log(response)
-    //         //return dispatch(addDeckAction(response))
-    //     }))
+    return Api.addCardToDeck(card)
+        .then(response => {
+            let card = {
+                question: response.question,
+                answer: response.answer
+            }
+            let deckTitle = response.deckTitle
+            return dispatch(addCardAction({card, deckTitle}))
+        })
 
 }

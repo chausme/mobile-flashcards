@@ -46,7 +46,7 @@ function general (state = {redirect: false, lastDeckTitle: false, lastDeckCards:
 
 function decks (state = {}, action) {
 
-    const { decks, deckTitle } = action
+    const { decks, deckTitle, card } = action
 
     switch (action.type) {
         case FETCH_DECKS :
@@ -61,6 +61,14 @@ function decks (state = {}, action) {
                      questions: []
                 }
             }
+        case ADD_CARD :
+            return {
+                ...state,
+                [deckTitle]: {
+                    ...state[deckTitle],
+                    questions: state[deckTitle].questions.concat(card)
+                }
+            }
         default :
             return state
   }
@@ -68,7 +76,7 @@ function decks (state = {}, action) {
 
 function deck (state = {}, action) {
 
-    const { deck, deckTitle } = action
+    const { deck, deckTitle, card } = action
 
     switch (action.type) {
         case FETCH_DECK :
@@ -78,6 +86,14 @@ function deck (state = {}, action) {
             }
         case REMOVE_DECKS :
             return {}
+        case ADD_CARD :
+            return {
+                ...state,
+                deck: {
+                    ...state.deck,
+                    questions: state.deck.questions.concat(card)
+                }
+            }
         default :
             return state
         }
