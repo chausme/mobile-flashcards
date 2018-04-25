@@ -11,8 +11,11 @@ class AddDeck extends React.Component {
 
     componentDidUpdate(prevProps) {
 
+        console.log('add dedck this prpos')
+        console.log(this.props);
+
         if (prevProps !== this.props) {
-            if (this.props.general.redirect) {
+            if (this.props.general.redirect && this.props.deck !== undefined) {
 
                 this.props.navigation.dispatch(NavigationActions.navigate({
                     routeName: 'DeckDetails',
@@ -46,9 +49,10 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps ({decks, general}) {
+function mapStateToProps ({decks, deck, general}) {
 
     return {
+        deck: deck,
         decks: decks,
         general: general
     }

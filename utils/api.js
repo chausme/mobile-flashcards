@@ -10,6 +10,10 @@ export const fetchDeck = (deckTitle) => {
 
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then(results => {
+
+            console.log('fetch api inside')
+            console.log(results)
+
             return results !== null ? JSON.parse(results)[deckTitle] : ''
         })
 }
@@ -29,45 +33,16 @@ export const addDeck = (deckTitle) => {
         }
     }
 
-    return AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
-        AsyncStorage.setItem(DECKS_STORAGE_KEY, result, () => {
-            AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(newDeck))
-        })
-    }).then(response => (deckTitle))
-
-}
-
-export const addCardToDeck = (card) => {
-
-    console.log('api card')
-    console.log(card)
-
-    let newCard = {
-        question: card.question,
-        answer: card.answer
-    }
-
     function setStorage() {
         return AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
-            console.log('new card')
-            console.log(newCard)
-
-            let mergedData = JSON.parse(result)
-            console.log('mergedData')
-            mergedData[card.deckTitle].questions = mergedData[card.deckTitle].questions.concat(newCard);
-            console.log(mergedData)
-            AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(mergedData), (err, result) => {
-                console.log('resolve')
-                console.log(result)
+            AsyncStorage.setItem(DECKS_STORAGE_KEY, result, () => {
+                AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(newDeck))
             })
         })
     }
 
     function getUpdatedStorage() {
-        return AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
-            console.log('get updated storage')
-            console.log(result)
-        })
+        return AsyncStorage.getItem(DECKS_STORAGE_KEY)
     }
 
     async function waitForSet() {
@@ -76,10 +51,38 @@ export const addCardToDeck = (card) => {
     }
 
     return waitForSet().then(result => {
+        return deckTitle
+    })
 
-        console.log('waitfor')
-        console.log(result)
+}
 
+export const addCardToDeck = (card) => {
+
+    let newCard = {
+        question: card.question,
+        answer: card.answer
+    }
+
+    function setStorage() {
+        return AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
+
+            let mergedData = JSON.parse(result)
+            mergedData[card.deckTitle].questions = mergedData[card.deckTitle].questions.concat(newCard);
+
+            AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(mergedData))
+        })
+    }
+
+    function getUpdatedStorage() {
+        return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    }
+
+    async function waitForSet() {
+        const set = await setStorage()
+        return await getUpdatedStorage()
+    }
+
+    return waitForSet().then(result => {
         return card
     })
 

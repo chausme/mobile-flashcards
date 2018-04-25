@@ -19,8 +19,19 @@ class AddCard extends React.Component {
     componentDidUpdate(prevProps) {
 
         if (prevProps !== this.props) {
+
+            console.log('props add card // deck')
+            console.log(this.props.deck.deck)
+
             if (this.props.general.redirect) {
-                this.props.navigation.pop(1)
+
+                console.log('redirect')
+
+                this.props.navigation.dispatch(NavigationActions.navigate({
+                    routeName: 'DeckDetails',
+                    params: {deckTitle: this.props.general.redirect},
+                }))
+
             }
         }
     }
@@ -47,10 +58,11 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps ({decks, general}) {
+function mapStateToProps ({decks, deck, general}) {
 
     return {
         decks: decks,
+        deck: deck,
         general: general
     }
 

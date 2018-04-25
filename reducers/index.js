@@ -8,7 +8,7 @@ import {
     ADD_CARD
 } from '../actions'
 
-function general (state = {redirect: false, lastDeckTitle: false, lastDeckCards: 0}, action) {
+function general (state = {redirect: false}, action) {
 
     const { deckTitle } = action
 
@@ -28,15 +28,12 @@ function general (state = {redirect: false, lastDeckTitle: false, lastDeckCards:
         case ADD_DECK :
             return {
                 ...state,
-                redirect: deckTitle,
-                lastDeckTitle: deckTitle
+                redirect: deckTitle
             }
         case ADD_CARD :
             return {
                 ...state,
-                redirect: true,
-                lastDeckTitle: false,
-                lastDeckCards: state.lastDeckCards + 1
+                redirect: deckTitle
             }
         default :
             return state

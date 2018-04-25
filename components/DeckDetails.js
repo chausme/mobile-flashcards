@@ -15,20 +15,8 @@ class DeckDetails extends React.Component {
 
     componentDidMount() {
         this.props.fetchDeck(this.props.navigation.state.params.deckTitle)
-                console.log('this.props')
+        console.log('this.props')
         console.log(this.props)
-    }
-
-    componentDidUpdate(prevProps) {
-
-        if (prevProps !== this.props) {
-
-            if (this.props.general.lastDeckTitle) {
-
-                console.log('update questions!')
-
-            }
-        }
     }
 
     render() {
@@ -44,15 +32,7 @@ class DeckDetails extends React.Component {
         return (
             <View style={styles.deckDetails}>
                 <Text>Deck Details for {this.props.navigation.state.params.deckTitle}</Text>
-                <Text>
-                    { deck
-                        ? deck.questions.length
-                        : ( this.props.general.lastDeckCards
-                            ? this.props.general.lastDeckCards
-                            : '0'
-                        )
-                    }
-                    cards
+                <Text>{deck ? deck.questions.length : '0'} cards
                 </Text>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate(
                   'AddCard',
