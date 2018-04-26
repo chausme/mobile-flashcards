@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form'
 import {
     FETCH_DECKS,
     FETCH_DECK,
+    DISABLE_REDIRECT,
     REMOVE_DECKS,
     ADD_DECK,
     ADD_CARD
@@ -18,7 +19,7 @@ function general (state = {redirect: false}, action) {
                 ...state,
                 redirect: false
             }
-        case FETCH_DECK :
+        case DISABLE_REDIRECT :
             return {
                 ...state,
                 redirect: false
@@ -83,14 +84,6 @@ function deck (state = {}, action) {
             }
         case REMOVE_DECKS :
             return {}
-        case ADD_CARD :
-            return {
-                ...state,
-                deck: {
-                    ...state.deck,
-                    questions: state.deck.questions.concat(card)
-                }
-            }
         default :
             return state
         }

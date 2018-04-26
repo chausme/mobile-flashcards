@@ -10,18 +10,12 @@ export const fetchDeck = (deckTitle) => {
 
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then(results => {
-
-            console.log('fetch api inside')
-            console.log(results)
-
             return results !== null ? JSON.parse(results)[deckTitle] : ''
         })
 }
 
 export const removeDecks = () => {
-
     return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
-
 }
 
 export const addDeck = (deckTitle) => {

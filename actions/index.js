@@ -25,16 +25,16 @@ export const fetchDeck = (deckTitle) => dispatch => {
 
     return Api.fetchDeck(deckTitle)
         .then(deck => {
-
-            console.log('fetch deck api response')
-            console.log(deck)
-
             return dispatch(fetchDeckAction(deck))
-
-
         })
 
 }
+
+export const DISABLE_REDIRECT = 'DISABLE_REDIRECT'
+
+export const disableRedirectAction = () => ({
+    type: DISABLE_REDIRECT
+})
 
 export const REMOVE_DECKS = 'REMOVE_DECKS'
 
@@ -62,10 +62,6 @@ export const addDeck = (deck) => dispatch => {
 
     return Api.addDeck(deck.deckTitle)
         .then(response => {
-
-            console.log('add deck action')
-            console.log(response)
-
             return dispatch(addDeckAction(response))
         })
 
@@ -83,11 +79,6 @@ export const addCard = (card) => dispatch => {
 
     return Api.addCardToDeck(card)
         .then(response => {
-
-
-            console.log('add card actions response')
-            console.log(response)
-
             let card = {
                 question: response.question,
                 answer: response.answer

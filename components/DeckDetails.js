@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
 import {
-    fetchDeck
+    fetchDeck,
+    disableRedirectAction
 } from '../actions'
 
 class DeckDetails extends React.Component {
@@ -14,9 +15,8 @@ class DeckDetails extends React.Component {
     }
 
     componentDidMount() {
+        this.props.disableRedirect()
         this.props.fetchDeck(this.props.navigation.state.params.deckTitle)
-        console.log('this.props')
-        console.log(this.props)
     }
 
     render() {
@@ -25,10 +25,6 @@ class DeckDetails extends React.Component {
 
         const deckTitle = this.props.navigation.state.params.deckTitle
         const deck = this.props.deck
-
-        console.log('single deck')
-        console.log(this.props)
-
         return (
             <View style={styles.deckDetails}>
                 <Text>Deck Details for {this.props.navigation.state.params.deckTitle}</Text>
@@ -69,6 +65,7 @@ function mapStateToProps ({deck, general}) {
 function mapDispatchToProps (dispatch, { navigation }) {
     return {
         fetchDeck: (data) => dispatch(fetchDeck(data)),
+        disableRedirect: () => dispatch(disableRedirectAction()),
     }
 }
 

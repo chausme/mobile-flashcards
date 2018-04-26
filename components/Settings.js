@@ -17,10 +17,7 @@ class Settings extends React.Component {
     componentDidUpdate(prevProps) {
 
         if (prevProps !== this.props) {
-
             this.props.fetchDecks()
-            console.log('fetch it!')
-
         }
     }
 

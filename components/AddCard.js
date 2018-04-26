@@ -4,8 +4,7 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'rea
 import AddCardForm from './AddCardForm'
 import { NavigationActions } from 'react-navigation'
 import {
-    addCard,
-    fetchDeck
+    addCard
 } from '../actions'
 
 class AddCard extends React.Component {
@@ -20,17 +19,12 @@ class AddCard extends React.Component {
 
         if (prevProps !== this.props) {
 
-            console.log('props add card // deck')
-            console.log(this.props.deck.deck)
-
             if (this.props.general.redirect) {
 
-                console.log('redirect')
-
-                this.props.navigation.dispatch(NavigationActions.navigate({
+                this.props.navigation.navigate({
                     routeName: 'DeckDetails',
                     params: {deckTitle: this.props.general.redirect},
-                }))
+                })
 
             }
         }
@@ -58,11 +52,10 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps ({decks, deck, general}) {
+function mapStateToProps ({decks, general}) {
 
     return {
         decks: decks,
-        deck: deck,
         general: general
     }
 
@@ -70,8 +63,7 @@ function mapStateToProps ({decks, deck, general}) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        addCard: (data) => dispatch(addCard(data)),
-        fetchDeck: (data) => dispatch(fetchDeck(data)),
+        addCard: (data) => dispatch(addCard(data))
     }
 }
 
