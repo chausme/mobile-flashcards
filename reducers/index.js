@@ -93,18 +93,20 @@ function deck (state = {}, action) {
 
 function quiz (state = {current: 0}, action) {
 
-    const { card } = action
+    const { correct } = action
 
     switch (action.type) {
         case START_QUIZ :
             return {
                 ...state,
-                current: 0
+                current: 0,
+                correct: 0
             }
         case NEXT_CARD :
             return {
                 ...state,
-                current: state.current + 1
+                current: state.current + 1,
+                correct: state.correct + correct
             }
         default :
             return state

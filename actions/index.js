@@ -97,6 +97,7 @@ export const startQuizAction = () => ({
 
 export const NEXT_CARD = 'NEXT_CARD'
 
-export const nextCardAction = () => ({
-    type: NEXT_CARD
+export const nextCardAction = (correct) => ({
+    type: NEXT_CARD,
+    correct
 })
