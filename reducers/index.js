@@ -6,7 +6,9 @@ import {
     DISABLE_REDIRECT,
     REMOVE_DECKS,
     ADD_DECK,
-    ADD_CARD
+    ADD_CARD,
+    START_QUIZ,
+    NEXT_CARD
 } from '../actions'
 
 function general (state = {redirect: false}, action) {
@@ -89,9 +91,30 @@ function deck (state = {}, action) {
         }
 }
 
+function quiz (state = {current: 0}, action) {
+
+    const { card } = action
+
+    switch (action.type) {
+        case START_QUIZ :
+            return {
+                ...state,
+                current: 0
+            }
+        case NEXT_CARD :
+            return {
+                ...state,
+                current: state.current + 1
+            }
+        default :
+            return state
+        }
+}
+
 export default combineReducers({
     general,
     decks,
     deck,
+    quiz,
     form: formReducer
 })
