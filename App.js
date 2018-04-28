@@ -14,6 +14,7 @@ import { Constants } from 'expo'
 import reducer from './reducers'
 import thunk from 'redux-thunk'
 import { setLocalNotification } from './utils/helpers'
+// import { AsyncStorage } from 'react-native'
 
 const logger = store => next => action => {
     console.group(action.type)
@@ -137,7 +138,15 @@ const MainNavigator = StackNavigator({
 export default class App extends React.Component {
 
     componentDidMount() {
+
         setLocalNotification()
+
+        // const DECKS_STORAGE_KEY = 'MobileFlashcards:decks'
+        //
+        // AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
+        //     console.log(result)
+        // })
+
     }
 
     render() {

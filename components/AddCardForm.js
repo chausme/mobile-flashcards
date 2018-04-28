@@ -1,11 +1,34 @@
 import React from 'react'
-import { StyleSheet, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native'
-import { Field, reduxForm } from 'redux-form'
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput, Picker } from 'react-native'
+import { Field, Item, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-const renderInput = ({ input, ...inputProps }) => (
-    <TextInput {...input} />
+const renderInput = ({ input, label, ...inputProps }) => (
+    <View>
+        <Text>Please enter {label}</Text>
+        <TextInput {...input} />
+    </View>
 )
+
+const renderPicker = ({ input: { onChange, value, ...inputProps }, label, ...pickerProps }) => (
+        <View>
+            <Text>Please select {label}</Text>
+            <Picker
+                selectedValue={value}
+                onValueChange={value => {
+                    requestAnimationFrame(() => {
+                        onChange(value);
+                    });
+                }}
+                {...inputProps}
+                {...pickerProps}
+            >
+                <Picker.Item label="Yes" value="yes" />
+                <Picker.Item label="No" value="no" />
+            </Picker>
+        </View>
+
+);
 
 const AddCardForm = props => {
 
@@ -13,8 +36,14 @@ const AddCardForm = props => {
 
     return (
         <ScrollView keyboardShouldPersistTaps={'handled'}>
-            <Field name="question" component={renderInput} label="Question" />
-            <Field name="answer" component={renderInput} label="Answer" />
+            <Field name="question" component={renderInput} label="question" />
+            <Field
+                name="answer"
+                component={renderPicker}
+                label="answer"
+                value=""
+            >
+            </Field>
             <TouchableOpacity onPress={handleSubmit}>
                 <Text>Submit</Text>
             </TouchableOpacity>
@@ -31,7 +60,8 @@ AddCardForm = reduxForm({
 AddCardForm = connect(
     state => ({
         initialValues: {
-            deckTitle: state.deck.deck ? state.deck.deck.title : state.general.lastDeckTitle
+            deckTitle: state.deck.deck ? state.deck.deck.title : state.general.lastDeckTitle,
+            answer: 'yes'
         }
     }),
 )(AddCardForm)

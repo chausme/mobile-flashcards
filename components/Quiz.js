@@ -98,7 +98,7 @@ class Quiz extends React.Component {
                         <View>
                             <View>
                                 <Text>Deck title: {deckTitle}</Text>
-                                <Text>{currentCard} / {cards.length}</Text>
+                                <Text>{currentCard + 1} / {cards.length}</Text>
                             </View>
                             <View>
                                 <Text>{cards[currentCard].question}</Text>
