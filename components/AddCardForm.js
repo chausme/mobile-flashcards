@@ -3,8 +3,13 @@ import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput, Picker
 import { Field, Item, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 
-const renderInput = ({ input, label, ...inputProps }) => (
+const required = value => (value ? undefined : 'Required')
+
+const renderInput = ({ input, label, meta: { touched, error, warning }, ...inputProps }) => (
     <View>
+    {touched &&
+      ((error && <Text>{error}</Text>) ||
+        (warning && <Text>{warning}</Text>))}
         <Text>Please enter {label}</Text>
         <TextInput {...input} />
     </View>
@@ -36,7 +41,7 @@ const AddCardForm = props => {
 
     return (
         <ScrollView keyboardShouldPersistTaps={'handled'}>
-            <Field name="question" component={renderInput} label="question" />
+            <Field name="question" component={renderInput} label="question" validate={required} />
             <Field
                 name="answer"
                 component={renderPicker}

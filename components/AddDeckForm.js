@@ -1,9 +1,16 @@
 import React from 'react'
-import { StyleSheet, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native'
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native'
 import { Field, reduxForm } from 'redux-form'
 
-const renderInput = ({ input, ...inputProps }) => (
-    <TextInput {...input} />
+const required = value => (value ? undefined : 'Required')
+
+const renderInput = ({ input, label, meta: { touched, error, warning }, ...inputProps }) => (
+    <View>
+    {touched &&
+      ((error && <Text>{error}</Text>) ||
+        (warning && <Text>{warning}</Text>))}
+        <TextInput {...input} />
+    </View>
 )
 
 const AddDeckForm = props => {
@@ -12,7 +19,7 @@ const AddDeckForm = props => {
 
     return (
         <ScrollView keyboardShouldPersistTaps={'handled'}>
-            <Field name="deckTitle" component={renderInput} label="Deck Title" />
+            <Field name="deckTitle" component={renderInput} label="Deck Title" validate={required} />
             <TouchableOpacity onPress={handleSubmit}>
                 <Text>Create Deck</Text>
             </TouchableOpacity>
