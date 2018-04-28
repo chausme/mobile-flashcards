@@ -1,6 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import {
+    clearLocalNotification,
+    setLocalNotification
+} from '../utils/helpers'
 import {
     fetchDeck,
     startQuizAction,
@@ -49,17 +53,11 @@ class Quiz extends React.Component {
     }
 
     showAnswer() {
-
-        console.log('show answer')
-
         this.setState(() => ({showAnswer: true}))
-
     }
 
     showQuestion() {
-
         this.setState(() => ({showAnswer: false}))
-
     }
 
     render() {
@@ -72,11 +70,12 @@ class Quiz extends React.Component {
         const cards = deck.questions
         const currentCard = this.props.quiz.current
 
-        console.log('quiz props')
-        console.log(this.props.quiz)
+        if (currentCard > cards.length - 1) {
 
-        const correct = 'yes'
-        const incorrect = 'no'
+            clearLocalNotification()
+                .then(setLocalNotification)
+
+        }
 
         return (
             <View style={styles.question}>

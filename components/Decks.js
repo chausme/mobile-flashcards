@@ -48,7 +48,7 @@ function mapStateToProps ({decks}) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        fetchDecks: () => dispatch(fetchDecks()),
+        fetchDecks: () => dispatch(fetchDecks())
     }
 }
 

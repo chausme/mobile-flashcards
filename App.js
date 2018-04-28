@@ -13,6 +13,7 @@ import { purple, white } from './utils/colors'
 import { Constants } from 'expo'
 import reducer from './reducers'
 import thunk from 'redux-thunk'
+import { setLocalNotification } from './utils/helpers'
 
 const logger = store => next => action => {
     console.group(action.type)
@@ -134,6 +135,10 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+    componentDidMount() {
+        setLocalNotification()
+    }
 
     render() {
 
