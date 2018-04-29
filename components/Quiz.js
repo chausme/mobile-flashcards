@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import { white, black, gray } from '../utils/colors'
+import { Constants } from 'expo'
 import {
     clearLocalNotification,
     setLocalNotification
@@ -140,11 +141,8 @@ class Quiz extends React.Component {
 
                 <View>
                     <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
-                        <View style={styles.content}>
+                        <View style={styles.contentAnswer}>
                             <Text style={styles.answer}>Answer: {cards[currentCard].answer}</Text>
-                            <TouchableOpacity onPress={() => this.flipCard()}>
-                                <Text style={styles.showAnswer}>Back to Question</Text>
-                            </TouchableOpacity>
                         </View>
                     </Animated.View>
                     <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
@@ -171,20 +169,24 @@ class Quiz extends React.Component {
             ) : (
 
                 <View>
-                    <View style={styles.content}>
-                        <Text style={styles.results}>You answered {this.props.quiz.correct} question(s) correctly of {cards.length} in total, which is {this.props.quiz.correct / cards.length * 100}%</Text>
+                    <View>
+                        <View style={styles.header}></View>
+                        <View style={styles.content}>
+                            <Text style={styles.results}>You answered {this.props.quiz.correct} question(s) correctly of {cards.length} in total, which is {this.props.quiz.correct / cards.length * 100}%</Text>
+                        </View>
+                        <View style={styles.actions}>
+                            <TouchableOpacity style={styles.buttonSecondary} onPress={() => this.props.startQuiz()}>
+                                <Text style={styles.buttonSecondaryText}>Restart</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonPrimary} onPress={() => this.props.navigation.navigate(
+                              'DeckDetails',
+                              { deckTitle: deckTitle }
+                            )}>
+                                <Text style={styles.buttonPrimaryText}>Back</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={styles.actions}>
-                        <TouchableOpacity style={styles.buttonSecondary} onPress={() => this.props.startQuiz()}>
-                            <Text style={styles.buttonSecondaryText}>Restart Quiz</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonPrimary} onPress={() => this.props.navigation.navigate(
-                          'DeckDetails',
-                          { deckTitle: deckTitle }
-                        )}>
-                            <Text style={styles.buttonPrimaryText}>Back to Deck</Text>
-                        </TouchableOpacity>
-                    </View>
+
                 </View>
 
             )}
@@ -200,25 +202,37 @@ class Quiz extends React.Component {
 const styles = StyleSheet.create({
     generalView: {
         backgroundColor: white,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     content: {
         paddingLeft: 20,
         paddingRight: 20,
         flex: 4,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignContent: 'stretch',
     },
-    cardsQuantity: {
-        padding: 20
+    contentAnswer: {
+        flex: 1,
+        paddingLeft: 20,
+        paddingRight: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    header: {
+        padding: 20,
+        marginLeft: 20
     },
     question: {
-        fontSize: 18
+        fontSize: 18,
+        alignSelf: 'stretch',
+        width: Dimensions.get('window').width,
+        padding: 20
     },
     answer: {
         fontSize: 18,
         marginBottom: 20,
-        paddingTop: 140,
-        textAlign: 'center'
+        textAlign: 'center',
+        top: -20
     },
     results: {
         fontSize: 18,
@@ -231,9 +245,10 @@ const styles = StyleSheet.create({
     actions: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignContent: 'flex-start',
         alignItems: 'flex-start',
+        padding: 20
     },
     buttonPrimary: {
         borderColor: black,
@@ -245,6 +260,8 @@ const styles = StyleSheet.create({
         paddingRight: 40,
         alignItems: 'center',
         borderRadius: 10,
+        marginLeft: 10,
+        marginRight: 10
     },
     buttonPrimaryText: {
         color: white,
@@ -259,18 +276,20 @@ const styles = StyleSheet.create({
         paddingRight: 40,
         borderRadius: 10,
         marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10
     },
     buttonSecondaryText: {
         fontSize: 18,
     },
     flipCard: {
-      backfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden',
     },
     flipCardBack: {
-      position: "absolute",
-      top: 0,
-      width: 400,
-      height: 400
+        position: 'absolute',
+        top: 0,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height - Constants.statusBarHeight,
     },
 })
 
