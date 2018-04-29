@@ -25,6 +25,8 @@ class Quiz extends React.Component {
         }
     }
 
+    /*** Flip Animation @source https://codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native ***/
+
     componentWillMount() {
         this.animatedValue = new Animated.Value(0);
         this.value = 0;
