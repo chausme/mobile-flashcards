@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import { white, black, gray } from '../utils/colors'
 import {
@@ -21,6 +21,50 @@ class Quiz extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: 'Quiz'
+        }
+    }
+
+    componentWillMount() {
+        this.animatedValue = new Animated.Value(0);
+        this.value = 0;
+        this.animatedValue.addListener(({ value }) => {
+            this.value = value;
+        })
+        this.frontInterpolate = this.animatedValue.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['0deg', '180deg'],
+        })
+        this.backInterpolate = this.animatedValue.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['180deg', '360deg']
+        })
+        this.frontOpacity = this.animatedValue.interpolate({
+            inputRange: [89, 90],
+            outputRange: [1, 0]
+        })
+        this.backOpacity = this.animatedValue.interpolate({
+            inputRange: [89, 90],
+            outputRange: [0, 1]
+        })
+    }
+
+    flipCard() {
+
+        if (this.value >= 90) {
+
+            Animated.spring(this.animatedValue,{
+                toValue: 0,
+                friction: 8,
+                tension: 10
+            }).start();
+
+            } else {
+
+            Animated.spring(this.animatedValue,{
+                toValue: 180,
+                friction: 8,
+                tension: 10
+            }).start();
         }
     }
 
@@ -63,6 +107,17 @@ class Quiz extends React.Component {
 
     render() {
 
+        const frontAnimatedStyle = {
+          transform: [
+            { rotateY: this.frontInterpolate }
+          ]
+        }
+        const backAnimatedStyle = {
+          transform: [
+            { rotateY: this.backInterpolate }
+          ]
+        }
+
         const deckTitle = this.props.navigation.state.params.deckTitle
         const deck = this.props.deck
 
@@ -84,40 +139,33 @@ class Quiz extends React.Component {
             {(currentCard <= cards.length - 1) ? (
 
                 <View>
-
-                    {(this.state.showAnswer) ? (
-
+                    <Animated.View style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
                         <View style={styles.content}>
                             <Text style={styles.answer}>Answer: {cards[currentCard].answer}</Text>
-                            <TouchableOpacity style={styles.buttonSecondary} onPress={() => this.showQuestion()}>
-                                <Text style={styles.buttonSecondaryText}>Back to Question</Text>
+                            <TouchableOpacity onPress={() => this.flipCard()}>
+                                <Text style={styles.showAnswer}>Back to Question</Text>
                             </TouchableOpacity>
                         </View>
-
-                    ) : (
-
-                        <View>
-                            <View style={styles.header}>
-                                <Text style={styles.cardsQuantity}>{currentCard + 1} / {cards.length}</Text>
-                            </View>
-                            <View style={styles.content}>
-                                <Text style={styles.question}>{cards[currentCard].question}</Text>
-                                <TouchableOpacity>
-                                    <Text style={styles.showAnswer} onPress={() => this.showAnswer()}>Show Answer</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.actions}>
-                                <TouchableOpacity style={styles.buttonSecondary} onPress={() => this.clickCorrect(cards[currentCard].answer)}>
-                                    <Text style={styles.buttonSecondaryText}>Correct</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.buttonPrimary} onPress={() => this.clickIncorrect(cards[currentCard].answer)}>
-                                    <Text style={styles.buttonPrimaryText}>lncorrect</Text>
-                                </TouchableOpacity>
-                            </View>
+                    </Animated.View>
+                    <Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
+                        <View style={styles.header}>
+                            <Text style={styles.cardsQuantity}>{currentCard + 1} / {cards.length}</Text>
                         </View>
-
-                    )}
-
+                        <View style={styles.content}>
+                            <Text style={styles.question}>{cards[currentCard].question}</Text>
+                            <TouchableOpacity onPress={() => this.flipCard()}>
+                                <Text style={styles.showAnswer}>Show Answer</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.actions}>
+                            <TouchableOpacity style={styles.buttonSecondary} onPress={() => this.clickCorrect(cards[currentCard].answer)}>
+                                <Text style={styles.buttonSecondaryText}>Correct</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonPrimary} onPress={() => this.clickIncorrect(cards[currentCard].answer)}>
+                                <Text style={styles.buttonPrimaryText}>lncorrect</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Animated.View>
                 </View>
 
             ) : (
@@ -161,9 +209,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     cardsQuantity: {
-        // color: gray,
-        // textAlign: 'center',
-        // fontSize: 20
         padding: 20
     },
     question: {
@@ -171,7 +216,9 @@ const styles = StyleSheet.create({
     },
     answer: {
         fontSize: 18,
-        marginBottom: 20
+        marginBottom: 20,
+        paddingTop: 140,
+        textAlign: 'center'
     },
     results: {
         fontSize: 18,
@@ -179,6 +226,7 @@ const styles = StyleSheet.create({
     showAnswer: {
         textAlign: 'center',
         marginTop: 20,
+        padding: 20,
     },
     actions: {
         flex: 1,
@@ -214,6 +262,15 @@ const styles = StyleSheet.create({
     },
     buttonSecondaryText: {
         fontSize: 18,
+    },
+    flipCard: {
+      backfaceVisibility: 'hidden',
+    },
+    flipCardBack: {
+      position: "absolute",
+      top: 0,
+      width: 400,
+      height: 400
     },
 })
 
