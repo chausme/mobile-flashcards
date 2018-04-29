@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { black, white } from '../utils/colors'
 import {
     removeDecks,
     fetchDecks
@@ -26,9 +27,9 @@ class Settings extends React.Component {
         const { removeDecks } = this.props
 
         return (
-            <View style={styles.addCard}>
-                <TouchableOpacity onPress={() => removeDecks()}>
-                    <Text>Remove all decks</Text>
+            <View style={styles.generalView}>
+                <TouchableOpacity style={styles.buttonPrimary} onPress={() => removeDecks()}>
+                    <Text style={styles.buttonPrimaryText}>Remove all decks</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -37,11 +38,24 @@ class Settings extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    addCard: {
+    generalView: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: white,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
+    },
+    buttonPrimary: {
+        backgroundColor: black,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 40,
+        paddingRight: 40,
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    buttonPrimaryText: {
+        color: white,
+        fontSize: 18,
     },
 })
 

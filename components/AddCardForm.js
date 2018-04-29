@@ -1,23 +1,24 @@
 import React from 'react'
-import { View, StyleSheet, Text, ScrollView, TouchableOpacity, TextInput, Picker } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, TextInput, Picker } from 'react-native'
 import { Field, Item, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import { red, yellow, white, black } from '../utils/colors'
 
 const required = value => (value ? undefined : 'Required')
 
 const renderInput = ({ input, label, meta: { touched, error, warning }, ...inputProps }) => (
-    <View>
+    <View style={styles.inputListItem}>
     {touched &&
-      ((error && <Text>{error}</Text>) ||
-        (warning && <Text>{warning}</Text>))}
-        <Text>Please enter {label}</Text>
-        <TextInput {...input} />
+      ((error && <Text style={styles.error}>{error}</Text>) ||
+        (warning && <Text style={styles.warning}>{warning}</Text>))}
+        <Text style={styles.label}>Please enter {label}</Text>
+        <TextInput style={styles.input} {...input} />
     </View>
 )
 
 const renderPicker = ({ input: { onChange, value, ...inputProps }, label, ...pickerProps }) => (
-        <View>
-            <Text>Please select {label}</Text>
+        <View style={styles.inputListItem}>
+            <Text style={styles.label}>Please select {label}</Text>
             <Picker
                 selectedValue={value}
                 onValueChange={value => {
@@ -40,7 +41,7 @@ const AddCardForm = props => {
     const { handleSubmit } = props
 
     return (
-        <ScrollView keyboardShouldPersistTaps={'handled'}>
+        <View>
             <Field name="question" component={renderInput} label="question" validate={required} />
             <Field
                 name="answer"
@@ -49,13 +50,49 @@ const AddCardForm = props => {
                 value=""
             >
             </Field>
-            <TouchableOpacity onPress={handleSubmit}>
-                <Text>Submit</Text>
+            <TouchableOpacity style={styles.buttonPrimary} onPress={handleSubmit}>
+                <Text style={styles.buttonPrimaryText}>Submit</Text>
             </TouchableOpacity>
-        </ScrollView>
+        </View>
     )
 
 }
+
+const styles = StyleSheet.create({
+    buttonPrimary: {
+        backgroundColor: black,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 40,
+        paddingRight: 40,
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    buttonPrimaryText: {
+        color: white,
+        fontSize: 18,
+    },
+    input: {
+        marginBottom: 10,
+        fontSize: 18,
+        paddingBottom: 10
+    },
+    error: {
+        textAlign: 'center',
+        color: red
+    },
+    warning: {
+        textAlign: 'center',
+        color: yellow
+    },
+    label: {
+        fontSize: 18,
+        marginBottom: 10
+    },
+    inputListItem: {
+        marginBottom: 20
+    }
+})
 
 AddCardForm = reduxForm({
     form: 'addCard',

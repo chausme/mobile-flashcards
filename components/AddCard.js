@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import AddCardForm from './AddCardForm'
 import { NavigationActions } from 'react-navigation'
+import { white } from '../utils/colors'
+
 import {
     addCard
 } from '../actions'
@@ -35,20 +37,26 @@ class AddCard extends React.Component {
         const { addCard } = this.props
 
         return (
-            <View style={styles.addCard}>
-                <AddCardForm onSubmit={addCard} />
-            </View>
+            <KeyboardAvoidingView style={styles.generalView} behavior="padding" enabled>
+                <View style={styles.formWrap}>
+                    <AddCardForm onSubmit={addCard} />
+                </View>
+            </KeyboardAvoidingView>
         )
     }
 
 }
 
 const styles = StyleSheet.create({
-    addCard: {
+    generalView: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
+        backgroundColor: white,
         justifyContent: 'center',
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    formWrap: {
+        alignItems: 'center',
     },
 })
 

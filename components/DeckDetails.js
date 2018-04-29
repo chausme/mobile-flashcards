@@ -1,6 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View, Keyboard, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import { white, black, gray } from '../utils/colors'
 import {
     fetchDeck,
     disableRedirectAction
@@ -26,22 +27,25 @@ class DeckDetails extends React.Component {
         const deckTitle = this.props.navigation.state.params.deckTitle
         const deck = this.props.deck
         return (
-            <View style={styles.deckDetails}>
-                <Text>Deck Details for {this.props.navigation.state.params.deckTitle}</Text>
-                <Text>{deck ? deck.questions.length : '0'} cards
-                </Text>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate(
-                  'AddCard',
-                  { deckTitle: deckTitle }
-                )}>
-                    <Text>Add Card</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate(
-                  'Quiz',
-                  { deckTitle: deckTitle }
-                )}>
-                    <Text>Start Quiz</Text>
-                </TouchableOpacity>
+            <View style={styles.generalView}>
+                <View style={styles.content}>
+                    <Text style={styles.deckTitle}>{this.props.navigation.state.params.deckTitle}</Text>
+                    <Text style={styles.cardsQuantity}>{deck ? deck.questions.length : '0'} cards</Text>
+                </View>
+                <View style={styles.actions}>
+                    <TouchableOpacity style={styles.buttonSecondary} onPress={() => this.props.navigation.navigate(
+                      'AddCard',
+                      { deckTitle: deckTitle }
+                    )}>
+                        <Text style={styles.buttonSecondaryText}>Add Card</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonPrimary} onPress={() => this.props.navigation.navigate(
+                      'Quiz',
+                      { deckTitle: deckTitle }
+                    )}>
+                        <Text style={styles.buttonPrimaryText}>Start Quiz</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
 
@@ -50,11 +54,54 @@ class DeckDetails extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    deckDetails: {
+    generalView: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: white,
         alignItems: 'center',
-        justifyContent: 'center',
+    },
+    content: {
+        flex: 2,
+        justifyContent: 'center'
+    },
+    deckTitle: {
+        fontSize: 30,
+        textAlign: 'center'
+    },
+    cardsQuantity: {
+        color: gray,
+        textAlign: 'center',
+        fontSize: 20
+    },
+    actions: {
+        flex: 1
+    },
+    buttonPrimary: {
+        borderColor: black,
+        borderWidth: 1,
+        backgroundColor: black,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 40,
+        paddingRight: 40,
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    buttonPrimaryText: {
+        color: white,
+        fontSize: 18,
+    },
+    buttonSecondary: {
+        borderColor: black,
+        borderWidth: 1,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 40,
+        paddingRight: 40,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    buttonSecondaryText: {
+        fontSize: 18,
     },
 })
 

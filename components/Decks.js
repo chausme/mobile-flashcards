@@ -1,7 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native'
 import Deck from '../components/Deck'
+import { white } from '../utils/colors'
 import {
     fetchDecks
 } from '../actions'
@@ -19,22 +20,20 @@ class Decks extends React.Component {
         let decks = this.props.decks
 
         return (
-            <View style={styles.deckList}>
+            <ScrollView style={styles.generalView}>
                 {decks.map((deck) => (
                     <Deck key={deck.title} title={deck.title} questions={deck.questions} navigation={navigation} />
                 ))}
-            </View>
+            </ScrollView>
         );
     }
 
 }
 
 const styles = StyleSheet.create({
-    deckList: {
+    generalView: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: white,
     },
 })
 

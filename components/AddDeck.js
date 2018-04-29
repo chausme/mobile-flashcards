@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, KeyboardAvoidingView } from 'react-native'
 import AddDeckForm from './AddDeckForm'
 import { NavigationActions } from 'react-navigation'
+import { white } from '../utils/colors'
 import {
     addDeck
 } from '../actions'
@@ -28,21 +29,31 @@ class AddDeck extends React.Component {
         const { addDeck } = this.props
 
         return (
-            <View style={styles.addDeck}>
-                <Text>What is the title of your new deck?</Text>
-                <AddDeckForm onSubmit={addDeck} />
-            </View>
+            <KeyboardAvoidingView style={styles.generalView} behavior="padding" enabled>
+                <View style={styles.formWrap}>
+                    <Text style={styles.label}>What is the title of your new deck?</Text>
+                    <AddDeckForm onSubmit={addDeck} />
+                </View>
+            </KeyboardAvoidingView>
         )
     }
 
 }
 
 const styles = StyleSheet.create({
-    addDeck: {
+    generalView: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
+        backgroundColor: white,
         justifyContent: 'center',
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    formWrap: {
+        alignItems: 'center',
+    },
+    label: {
+        fontSize: 18,
+        marginBottom: 10
     },
 })
 

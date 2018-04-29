@@ -9,7 +9,7 @@ import Settings from './components/Settings'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { purple, white } from './utils/colors'
+import { black, white } from './utils/colors'
 import { Constants } from 'expo'
 import reducer from './reducers'
 import thunk from 'redux-thunk'
@@ -69,10 +69,10 @@ const Tabs = TabNavigator({
         header: null
     },
     tabBarOptions: {
-        activeTintColor: Platform.OS === 'ios' ? purple : white,
+        activeTintColor: Platform.OS === 'ios' ? black : white,
         style: {
             height: 56,
-            backgroundColor: Platform.OS === 'ios' ? white : purple,
+            backgroundColor: Platform.OS === 'ios' ? white : black,
             shadowColor: 'rgba(0, 0, 0, 0.24)',
             shadowOffset: {
                 width: 0,
@@ -93,7 +93,7 @@ const MainNavigator = StackNavigator({
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {
-                backgroundColor: purple,
+                backgroundColor: black,
             }
         }
     },
@@ -102,7 +102,7 @@ const MainNavigator = StackNavigator({
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {
-                backgroundColor: purple,
+                backgroundColor: black,
             }
         }
     },
@@ -111,7 +111,7 @@ const MainNavigator = StackNavigator({
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {
-                backgroundColor: purple,
+                backgroundColor: black,
             }
         }
     },
@@ -120,7 +120,7 @@ const MainNavigator = StackNavigator({
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {
-                backgroundColor: purple,
+                backgroundColor: black,
             }
         }
     },
@@ -129,7 +129,7 @@ const MainNavigator = StackNavigator({
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {
-                backgroundColor: purple,
+                backgroundColor: black,
             }
         }
     }
@@ -138,15 +138,7 @@ const MainNavigator = StackNavigator({
 export default class App extends React.Component {
 
     componentDidMount() {
-
         setLocalNotification()
-
-        // const DECKS_STORAGE_KEY = 'MobileFlashcards:decks'
-        //
-        // AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
-        //     console.log(result)
-        // })
-
     }
 
     render() {
@@ -154,7 +146,7 @@ export default class App extends React.Component {
         return (
             <Provider store={store}>
                 <View style={{flex: 1}}>
-                    <FlashcardsStatusBar backgroundColor={purple} barStyle="light-content" />
+                    <FlashcardsStatusBar backgroundColor={black} barStyle="light-content" />
                     <MainNavigator />
                 </View>
             </Provider>
